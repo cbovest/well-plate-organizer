@@ -5,35 +5,37 @@ body {
 .app {
     display: flex;
     align-items: flex-start;
+    justify-content: center;
 }
 
 .well {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     height: 50px;
     width: 50px;
     border: 1px solid #ccc;
     padding: 10px;
     cursor: pointer;
     border-radius: 50%;
-    font-size: 20px;
+    font-size: 25px;
     text-align: center;
 }
 
 .well-row {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: green;
+}
+
+.row-container {
+    display: flex;
+    flex-direction: column;
 }
 
 .row-labels {
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-size: 25px;
-    margin-right: 950px;
-    background-color: blue;
+    height: 570px;
+    font-size: 55px;
 }
 
+.label {
+    padding: 4px;
+}

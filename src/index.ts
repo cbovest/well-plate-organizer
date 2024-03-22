@@ -3,11 +3,25 @@ interface Well {
     label: string;
 }
 
-// Generate 96 wells
+// Generate 96 wells labeled with coordinates
+const rowLetters: string[] = ["A", "B", "C", "D", "E", "F", "G", "H"];
+const rowNumbers: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+
 function generateWells(): Well[] {
+
     const wells: Well[] = [];
+
+    let Lettercount: number = 0;
+    let Numbercount: number = 0;
+
     for (let i = 1; i <= 96; i++) {
-        wells.push({ id: i, label: `Well ${i}` });
+        wells.push({ id: i, label: rowLetters[Lettercount] + rowNumbers[Numbercount]});
+      
+        Numbercount+=1;
+        if (Numbercount > 11) {
+            Numbercount = 0;
+            Lettercount+=1;
+        }
     }
     return wells;
 }
@@ -38,6 +52,10 @@ function renderWellPlate(wells: Well[], rowLabels: string[]): void {
         });
         appDiv.insertBefore(rowLabelDiv, appDiv.firstChild); 
 
+        //Create container div for well rows
+        const wellRowsContainer = document.createElement('div')
+        wellRowsContainer.className = 'row-container'
+
         // Create rows and columns for the well plate
         for (let i = 0; i < wells.length; i += wellsPerRow) {
             const rowDiv = document.createElement('div');
@@ -50,6 +68,8 @@ function renderWellPlate(wells: Well[], rowLabels: string[]): void {
                 wellDiv.className = 'well';
                 wellDiv.textContent = well.label;
 
+            
+
                 // Add click event to update the well label
                 wellDiv.addEventListener('click', () => {
                     const newLabel = prompt(`Enter a label for Well ${well.id}:`, well.label);
@@ -61,9 +81,10 @@ function renderWellPlate(wells: Well[], rowLabels: string[]): void {
 
                 rowDiv.appendChild(wellDiv);
             });
-
-            appDiv.appendChild(rowDiv);
+            wellRowsContainer.appendChild(rowDiv);
         }
+        appDiv.appendChild(wellRowsContainer);
+        appDiv.className = 'app';
     }
 }
 

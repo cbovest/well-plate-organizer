@@ -1,9 +1,18 @@
 "use strict";
-// Generate 96 wells
+// Generate 96 wells labeled with coordinates
+const rowLetters = ["A", "B", "C", "D", "E", "F", "G", "H"];
+const rowNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 function generateWells() {
     const wells = [];
+    let Lettercount = 0;
+    let Numbercount = 0;
     for (let i = 1; i <= 96; i++) {
-        wells.push({ id: i, label: `Well ${i}` });
+        wells.push({ id: i, label: rowLetters[Lettercount] + rowNumbers[Numbercount] });
+        Numbercount += 1;
+        if (Numbercount > 11) {
+            Numbercount = 0;
+            Lettercount += 1;
+        }
     }
     return wells;
 }
@@ -28,6 +37,9 @@ function renderWellPlate(wells, rowLabels) {
             rowLabelDiv.appendChild(labelDiv);
         });
         appDiv.insertBefore(rowLabelDiv, appDiv.firstChild);
+        //Create container div for well rows
+        const wellRowsContainer = document.createElement('div');
+        wellRowsContainer.className = 'row-container';
         // Create rows and columns for the well plate
         for (let i = 0; i < wells.length; i += wellsPerRow) {
             const rowDiv = document.createElement('div');
@@ -47,8 +59,10 @@ function renderWellPlate(wells, rowLabels) {
                 });
                 rowDiv.appendChild(wellDiv);
             });
-            appDiv.appendChild(rowDiv);
+            wellRowsContainer.appendChild(rowDiv);
         }
+        appDiv.appendChild(wellRowsContainer);
+        appDiv.className = 'app';
     }
 }
 // Entry point
