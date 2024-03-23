@@ -3,6 +3,10 @@ body {
 }
 
 .app {
+    justify-content: center;
+}
+
+.flex-container {
     display: flex;
     align-items: flex-start;
     justify-content: center;
@@ -28,14 +32,34 @@ body {
     flex-direction: column;
 }
 
-.row-labels {
+.row-label-div {
     display: flex;
     flex-direction: column;
     align-items: center;
     height: 570px;
-    font-size: 55px;
+    font-size: 45px;
 }
 
 .label {
-    padding: 4px;
+    padding: 9.5px;
+}
+
+.number-label-div {
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    font-size: 45px;
+    padding-left: 20px;
+}
+
+.digitlabel {
+    text-align: right;
+    padding-left: 47px;
+}
+
+.digitlabel:nth-child(10),
+.digitlabel:nth-child(11),
+.digitlabel:nth-child(12){
+    padding-left: 28px;
 }

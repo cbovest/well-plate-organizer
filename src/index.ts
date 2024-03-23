@@ -32,7 +32,30 @@ function generateRowLabels(): string[] {
     return rowLabels;
 }
 
-// Display everything together on page
+//Create div for top number labels
+const numberLabels: string[] = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
+
+//Make divs for number labels
+const numberLabelDiv = document.createElement('div');
+        numberLabelDiv.className = 'number-label-div';
+        numberLabels.forEach(digitlabel => {
+            const digitlabelDiv = document.createElement('div');
+            digitlabelDiv.className = 'digitlabel';
+            digitlabelDiv.textContent = digitlabel;
+            numberLabelDiv.appendChild(digitlabelDiv);
+        });
+    
+
+//Make container div to hold row labels and well plate
+const flexContainer = document.createElement('div');
+flexContainer.className = 'flex-container';
+
+//Create container div for well rows
+const wellRowsContainer = document.createElement('div')
+wellRowsContainer.className = 'row-container'
+
+
+// Display wells and row labels together on page
 function renderWellPlate(wells: Well[], rowLabels: string[]): void {
     const appDiv = document.getElementById('app');
 
@@ -41,20 +64,15 @@ function renderWellPlate(wells: Well[], rowLabels: string[]): void {
 
         const wellsPerRow = 12;
 
-        // Render row labels
+        //Make divs for row labels
         const rowLabelDiv = document.createElement('div');
-        rowLabelDiv.className = 'row-labels';
+        rowLabelDiv.className = 'row-label-div';
         rowLabels.forEach(label => {
             const labelDiv = document.createElement('div');
             labelDiv.className = 'label';
             labelDiv.textContent = label;
             rowLabelDiv.appendChild(labelDiv);
         });
-        appDiv.insertBefore(rowLabelDiv, appDiv.firstChild); 
-
-        //Create container div for well rows
-        const wellRowsContainer = document.createElement('div')
-        wellRowsContainer.className = 'row-container'
 
         // Create rows and columns for the well plate
         for (let i = 0; i < wells.length; i += wellsPerRow) {
@@ -83,7 +101,10 @@ function renderWellPlate(wells: Well[], rowLabels: string[]): void {
             });
             wellRowsContainer.appendChild(rowDiv);
         }
-        appDiv.appendChild(wellRowsContainer);
+        flexContainer.appendChild(rowLabelDiv);
+        flexContainer.appendChild(wellRowsContainer);
+        appDiv.appendChild(numberLabelDiv);
+        appDiv.appendChild(flexContainer);
         appDiv.className = 'app';
     }
 }
