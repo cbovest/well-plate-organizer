@@ -6,6 +6,10 @@ body {
     justify-content: center;
 }
 
+.reset-button {
+    margin-left: 20%;
+}
+
 .flex-container {
     display: flex;
     align-items: flex-start;
@@ -15,7 +19,7 @@ body {
 .well {
     height: 50px;
     width: 50px;
-    border: 1px solid #ccc;
+    border: 1px solid black;
     padding: 10px;
     cursor: pointer;
     border-radius: 50%;
@@ -30,6 +34,9 @@ body {
 .row-container {
     display: flex;
     flex-direction: column;
+    background-color: lightgray;
+    border: 1px;
+    border-radius: 2%;
 }
 
 .row-label-div {
