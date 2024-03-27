@@ -7,17 +7,6 @@ interface Well {
 const menuDiv = document.createElement('div') as HTMLDivElement;
 menuDiv.className = 'menu-div';
 
-//Create reset labels button
-const resetButton = document.createElement('button') as HTMLButtonElement;
-resetButton.className = 'reset-button';
-resetButton.textContent = "Reset Wells";
-menuDiv.appendChild(resetButton);
-
-resetButton.addEventListener('click', () => {
-    
-        }
-
-
 // Generate 96 wells labeled with coordinates
 const rowLetters: string[] = ["A", "B", "C", "D", "E", "F", "G", "H"];
 const rowNumbers: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
@@ -40,6 +29,7 @@ function generateWells(): Well[] {
     }
     return wells;
 }
+
 
 // Create row labels
 function generateRowLabels(): string[] {
@@ -133,3 +123,16 @@ document.addEventListener('DOMContentLoaded', () => {
     renderWellPlate(wells, rowLabels);
 });
 
+//Create reset labels button
+const resetButton = document.createElement('button') as HTMLButtonElement;
+resetButton.className = 'reset-button';
+resetButton.textContent = "Reset Wells";
+menuDiv.appendChild(resetButton);
+
+resetButton.addEventListener('click', () => {
+    
+    wellRowsContainer.innerHTML = '';
+    const wells = generateWells();
+    const rowLabels = generateRowLabels();
+    renderWellPlate(wells, rowLabels);
+    });

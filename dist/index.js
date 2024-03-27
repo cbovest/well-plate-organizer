@@ -2,14 +2,6 @@
 //Generate menu div at top of page
 const menuDiv = document.createElement('div');
 menuDiv.className = 'menu-div';
-//Make function that resets all well labels
-function resetWellLabels() {
-}
-//Create reset labels button
-const resetButton = document.createElement('button');
-resetButton.className = 'reset-button';
-resetButton.textContent = "Reset Wells";
-menuDiv.appendChild(resetButton);
 // Generate 96 wells labeled with coordinates
 const rowLetters = ["A", "B", "C", "D", "E", "F", "G", "H"];
 const rowNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
@@ -97,6 +89,17 @@ function renderWellPlate(wells, rowLabels) {
 }
 // Entry point
 document.addEventListener('DOMContentLoaded', () => {
+    const wells = generateWells();
+    const rowLabels = generateRowLabels();
+    renderWellPlate(wells, rowLabels);
+});
+//Create reset labels button
+const resetButton = document.createElement('button');
+resetButton.className = 'reset-button';
+resetButton.textContent = "Reset Wells";
+menuDiv.appendChild(resetButton);
+resetButton.addEventListener('click', () => {
+    wellRowsContainer.innerHTML = '';
     const wells = generateWells();
     const rowLabels = generateRowLabels();
     renderWellPlate(wells, rowLabels);
