@@ -1,11 +1,15 @@
+const appDiv = document.getElementById('app') as HTMLDivElement;
+const menuDiv = document.getElementById('menu-bar') as HTMLDivElement;
+const flexContainer = document.getElementById('flex-container') as HTMLDivElement;
+const wellRowsContainer = document.getElementById('row-container') as HTMLDivElement;
+const resetButton = document.getElementById('reset-button') as HTMLButtonElement;
+const colorPicker = document.getElementById('color-picker') as HTMLInputElement;
+
 interface Well {
     id: number;
     label: string;
+    color: string;
 }
-
-//Generate menu div at top of page
-const menuDiv = document.createElement('div') as HTMLDivElement;
-menuDiv.className = 'menu-div';
 
 // Generate 96 wells labeled with coordinates
 const rowLetters: string[] = ["A", "B", "C", "D", "E", "F", "G", "H"];
@@ -19,7 +23,7 @@ function generateWells(): Well[] {
     let Numbercount: number = 0;
 
     for (let i = 1; i <= 96; i++) {
-        wells.push({ id: i, label: rowLetters[Lettercount] + rowNumbers[Numbercount]});
+        wells.push({ id: i, label: rowLetters[Lettercount] + rowNumbers[Numbercount], color: "lightgray"});
       
         Numbercount+=1;
         if (Numbercount > 11) {
@@ -40,19 +44,8 @@ function generateRowLabels(): string[] {
 //Create top number labels
 const numberLabels: string[] = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
 
-//Make container div to hold row labels and well plate
-const flexContainer = document.createElement('div') as HTMLDivElement;
-flexContainer.className = 'flex-container';
-
-//Create container div for well rows
-const wellRowsContainer = document.createElement('div') as HTMLDivElement;
-wellRowsContainer.className = 'row-container'
-
-
 // Display wells and row labels together on page
 function renderWellPlate(wells: Well[], rowLabels: string[]): void {
-    const appDiv = document.getElementById('app') as HTMLDivElement;
-    appDiv.className = 'app';
 
         if (appDiv) {
         appDiv.innerHTML = '';
@@ -92,17 +85,23 @@ function renderWellPlate(wells: Well[], rowLabels: string[]): void {
                 const wellDiv = document.createElement('div') as HTMLDivElement;
                 wellDiv.className = 'well';
                 wellDiv.textContent = well.label;
-
+                wellDiv.style.backgroundColor = well.color;
+                
             
+                //Click to change color
+                wellDiv.addEventListener('click', () => {
+                    well.color = colorPicker.value;
+                    wellDiv.style.backgroundColor = colorPicker.value;
+                })
 
                 // Add click event to update the well label
-                wellDiv.addEventListener('click', () => {
+                wellDiv.addEventListener('dblclick', () => {
                     const newLabel = prompt(`Enter a label for Well ${well.label}:`, well.label);
                     if (newLabel !== null) {
                         well.label = newLabel;
                         renderWellPlate(wells, rowLabels); // Update the display
                     }
-                });
+                })
 
                 rowDiv.appendChild(wellDiv);
             });
@@ -110,7 +109,7 @@ function renderWellPlate(wells: Well[], rowLabels: string[]): void {
         }
         flexContainer.appendChild(rowLabelDiv);
         flexContainer.appendChild(wellRowsContainer);
-        appDiv.appendChild(menuDiv);
+
         appDiv.appendChild(numberLabelDiv);
         appDiv.appendChild(flexContainer);
         }
@@ -123,12 +122,6 @@ document.addEventListener('DOMContentLoaded', () => {
     renderWellPlate(wells, rowLabels);
 });
 
-//Create reset labels button
-const resetButton = document.createElement('button') as HTMLButtonElement;
-resetButton.className = 'reset-button';
-resetButton.textContent = "Reset Wells";
-menuDiv.appendChild(resetButton);
-
 resetButton.addEventListener('click', () => {
     
     wellRowsContainer.innerHTML = '';
@@ -136,3 +129,5 @@ resetButton.addEventListener('click', () => {
     const rowLabels = generateRowLabels();
     renderWellPlate(wells, rowLabels);
     });
+
+

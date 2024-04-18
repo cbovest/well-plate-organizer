@@ -2,15 +2,34 @@ body {
     font-family: Arial, sans-serif;
 }
 
-.app {
+#app {
     justify-content: center;
 }
 
-.reset-button {
-    margin-left: 20%;
+#menu-bar {
+    display: flex;
+    background-color: lightgray;
+    border-radius: 5%;
+    max-width: fit-content;
+    margin-top: 15px;
+    margin-left: auto;
+    margin-right: auto; 
+    box-shadow: 1px 1px 1px 1px black;
+    justify-content: center;
 }
 
-.flex-container {
+#color-picker {
+    margin: 10px;
+    box-shadow: 1px 1px 1px 1px black;
+}
+
+#reset-button {
+    border-radius: 5%;
+    box-shadow: 1px 1px 1px 1px black;
+    margin: 10px;
+}
+
+#flex-container {
     display: flex;
     align-items: flex-start;
     justify-content: center;
@@ -25,18 +44,24 @@ body {
     border-radius: 50%;
     font-size: 25px;
     text-align: center;
+    user-select: none;
+}
+
+.well:hover {
+    background-color: darkgray;
 }
 
 .well-row {
     display: flex;
 }
 
-.row-container {
+#row-container {
     display: flex;
     flex-direction: column;
     background-color: lightgray;
     border: 1px;
     border-radius: 2%;
+    box-shadow: 1px 1px 2px 2px black;
 }
 
 .row-label-div {

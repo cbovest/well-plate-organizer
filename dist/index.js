@@ -1,7 +1,10 @@
 "use strict";
-//Generate menu div at top of page
-const menuDiv = document.createElement('div');
-menuDiv.className = 'menu-div';
+const appDiv = document.getElementById('app');
+const menuDiv = document.getElementById('menu-bar');
+const flexContainer = document.getElementById('flex-container');
+const wellRowsContainer = document.getElementById('row-container');
+const resetButton = document.getElementById('reset-button');
+const colorPicker = document.getElementById('color-picker');
 // Generate 96 wells labeled with coordinates
 const rowLetters = ["A", "B", "C", "D", "E", "F", "G", "H"];
 const rowNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
@@ -10,7 +13,7 @@ function generateWells() {
     let Lettercount = 0;
     let Numbercount = 0;
     for (let i = 1; i <= 96; i++) {
-        wells.push({ id: i, label: rowLetters[Lettercount] + rowNumbers[Numbercount] });
+        wells.push({ id: i, label: rowLetters[Lettercount] + rowNumbers[Numbercount], color: "lightgray" });
         Numbercount += 1;
         if (Numbercount > 11) {
             Numbercount = 0;
@@ -26,16 +29,8 @@ function generateRowLabels() {
 }
 //Create top number labels
 const numberLabels = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
-//Make container div to hold row labels and well plate
-const flexContainer = document.createElement('div');
-flexContainer.className = 'flex-container';
-//Create container div for well rows
-const wellRowsContainer = document.createElement('div');
-wellRowsContainer.className = 'row-container';
 // Display wells and row labels together on page
 function renderWellPlate(wells, rowLabels) {
-    const appDiv = document.getElementById('app');
-    appDiv.className = 'app';
     if (appDiv) {
         appDiv.innerHTML = '';
         flexContainer.innerHTML = '';
@@ -68,8 +63,14 @@ function renderWellPlate(wells, rowLabels) {
                 const wellDiv = document.createElement('div');
                 wellDiv.className = 'well';
                 wellDiv.textContent = well.label;
-                // Add click event to update the well label
+                wellDiv.style.backgroundColor = well.color;
+                //Click to change color
                 wellDiv.addEventListener('click', () => {
+                    well.color = colorPicker.value;
+                    wellDiv.style.backgroundColor = colorPicker.value;
+                });
+                // Add click event to update the well label
+                wellDiv.addEventListener('dblclick', () => {
                     const newLabel = prompt(`Enter a label for Well ${well.label}:`, well.label);
                     if (newLabel !== null) {
                         well.label = newLabel;
@@ -82,7 +83,6 @@ function renderWellPlate(wells, rowLabels) {
         }
         flexContainer.appendChild(rowLabelDiv);
         flexContainer.appendChild(wellRowsContainer);
-        appDiv.appendChild(menuDiv);
         appDiv.appendChild(numberLabelDiv);
         appDiv.appendChild(flexContainer);
     }
@@ -93,11 +93,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const rowLabels = generateRowLabels();
     renderWellPlate(wells, rowLabels);
 });
-//Create reset labels button
-const resetButton = document.createElement('button');
-resetButton.className = 'reset-button';
-resetButton.textContent = "Reset Wells";
-menuDiv.appendChild(resetButton);
 resetButton.addEventListener('click', () => {
     wellRowsContainer.innerHTML = '';
     const wells = generateWells();
